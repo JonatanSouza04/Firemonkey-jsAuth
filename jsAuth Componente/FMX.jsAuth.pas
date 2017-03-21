@@ -24,7 +24,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, System.IOUtils,
   REST.Authenticator.OAuth, IPPeerClient, REST.Types, System.Net.HttpClient,
   IdGlobal, IdHTTP, System.Net.HttpClientComponent, System.JSON, FMX.jsAuthForm, REST.Utils,
-  FMX.Objects, FMX.StdCtrls, FMX.Types, IdURI, IPPeerAPI, IniFiles;
+  FMX.Objects, FMX.StdCtrls, FMX.Types, IdURI, IPPeerAPI, IniFiles, FMX.WebBrowserHelper;
 
 Type
 
@@ -63,6 +63,7 @@ Type
      Function CreateIniFile( Table, Field, Value : String ) : Boolean;
      Function ReadIniFile( Table, Field : String ) : String;
 
+
     protected
 
       frmAuthFacebook: TFrmJsAuth;
@@ -81,7 +82,7 @@ Type
          Function GetImageCover : TMemoryStream; // Foto de capa
          Procedure LoadAutoSave;
          Procedure Clear;
-
+         Function DeleteIniFile : Boolean;
 
      published
 
@@ -141,6 +142,7 @@ Type
         Function ReadIniFile( Table, Field : String ) : String;
 
 
+
         protected
 
           frmAuthGoogle: TFrmJsAuth;
@@ -161,6 +163,7 @@ Type
              Function GetPeopleMe : String;
              Procedure LoadAutoSave;
              Procedure Clear;
+             Function DeleteIniFile : Boolean;
 
          published
 
@@ -362,6 +365,32 @@ begin
     End;
 
   End;
+
+end;
+
+function TjsAuthFacebook.DeleteIniFile: Boolean;
+Var
+ DirFile : String;
+begin
+
+   {$IFDEF IOS}
+       if Not DirectoryExists(TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim) then
+       ForceDirectories( TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim );
+
+       DirFile := TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim;
+   {$ELSE}
+       DirFile := System.SysUtils.GetHomePath + PathDelim;
+   {$ENDIF}
+
+   if TFile.Exists( DirFile + 'jsAuthFacebook.ini' ) then
+   Begin
+
+    TFile.Delete( DirFile + 'jsAuthFacebook.ini' );
+    Result := TFile.Exists( DirFile + 'jsAuthFacebook.ini' );
+
+   End
+   Else
+    Result := False;
 
 end;
 
@@ -739,6 +768,32 @@ begin
 
 End;
 
+function TjsAuthGoogle.DeleteIniFile: Boolean;
+Var
+ DirFile : String;
+begin
+
+   {$IFDEF IOS}
+       if Not DirectoryExists(TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim) then
+       ForceDirectories( TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim );
+
+       DirFile := TPath.GetDocumentsPath + PathDelim + 'Config' + PathDelim;
+   {$ELSE}
+       DirFile := System.SysUtils.GetHomePath + PathDelim;
+   {$ENDIF}
+
+   if TFile.Exists( DirFile + 'jsAuthGoogle.ini' ) then
+   Begin
+
+     TFile.Delete( DirFile + 'jsAuthGoogle.ini' );
+     Result := TFile.Exists( DirFile + 'jsAuthGoogle.ini' );
+
+   End
+   Else
+    Result := False;
+
+end;
+
 destructor TjsAuthGoogle.Destroy;
 begin
 
@@ -992,6 +1047,7 @@ begin
 
           frmAuthGoogle.WebBrowser.OnShouldStartLoadWithRequest := OnShouldStartLoadWithRequest;
           frmAuthGoogle.WebBrowser.OnDidFinishLoad              := OnDidFinishLoadGoogle;
+          frmAuthGoogle.WebBrowser.SetUserAgent('Mozilla/5.0 Google');
           frmAuthGoogle.LayoutTop.Visible := True;
           frmAuthGoogle.SetURL(URL);
 

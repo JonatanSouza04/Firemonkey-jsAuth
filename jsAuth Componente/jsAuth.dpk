@@ -46,7 +46,8 @@ requires
 
 contains
   FMX.jsAuth in 'FMX.jsAuth.pas',
-  FMX.jsAuthForm in 'FMX.jsAuthForm.pas' {FrmJsAuth};
+  FMX.jsAuthForm in 'FMX.jsAuthForm.pas' {FrmJsAuth},
+  FMX.WebBrowserHelper in 'FMX.WebBrowserHelper.pas';
 
 end.
 

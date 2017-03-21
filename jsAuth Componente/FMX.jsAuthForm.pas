@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Objects, FMX.Controls.Presentation, FMX.Layouts, FMX.WebBrowser,
-  FMX.Effects;
+  FMX.Effects, FMX.WebBrowserHelper;
 
 type
   TFrmJsAuth = class(TForm)
@@ -91,6 +91,8 @@ begin
    WebBrowser.CanFocus := True;
    WebBrowser.Navigate( URL );
    WebBrowser.SetFocus;
+
+
 
 end;
 
