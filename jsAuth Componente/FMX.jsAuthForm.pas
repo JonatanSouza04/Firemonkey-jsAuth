@@ -20,11 +20,9 @@ type
     Layout_Main: TLayout;
     Rct_Success: TRectangle;
     Img_Success: TImage;
-    Time_Google: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure Time_URLTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure Time_GoogleTimer(Sender: TObject);
   private
     URL : String;
     FAuthCodeGoogle : String;
@@ -48,7 +46,6 @@ procedure TFrmJsAuth.FormCreate(Sender: TObject);
 begin
 
   Time_URL.Enabled    := False;
-  Time_Google.Enabled := False;
 
 end;
 
@@ -58,7 +55,6 @@ begin
   WebBrowser.Align   := TAlignLayout.Client;
   Tag := 0;
   Time_URL.Enabled    := True;
-  Time_Google.Enabled := False;
 
 end;
 
@@ -76,23 +72,14 @@ begin
 
 end;
 
-procedure TFrmJsAuth.Time_GoogleTimer(Sender: TObject);
-begin
-
-
- //B_Cancel.OnClick(SB_Cancel);
-
-end;
-
 procedure TFrmJsAuth.Time_URLTimer(Sender: TObject);
 begin
 
    Time_URL.Enabled := False;
+
    WebBrowser.CanFocus := True;
    WebBrowser.Navigate( URL );
    WebBrowser.SetFocus;
-
-
 
 end;
 

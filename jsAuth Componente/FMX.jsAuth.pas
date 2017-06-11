@@ -24,7 +24,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, System.IOUtils,
   REST.Authenticator.OAuth, IPPeerClient, REST.Types, System.Net.HttpClient,
   IdGlobal, IdHTTP, System.Net.HttpClientComponent, System.JSON, FMX.jsAuthForm, REST.Utils,
-  FMX.Objects, FMX.StdCtrls, FMX.Types, IdURI, IPPeerAPI, IniFiles, FMX.WebBrowserHelper;
+  FMX.Objects, FMX.StdCtrls, FMX.Types, IdURI, IPPeerAPI, IniFiles, FMX.WebBrowserHelper, FMX.Dialogs;
 
 Type
 
@@ -254,6 +254,17 @@ begin
        If DownloadImage('https://graph.facebook.com/me/picture?width=200&height=200&access_token=' + FTokenAccess, RetStream ) Then
        FImgProfile := RetStream;
 
+       if FAutoSave then
+       Begin
+
+         CreateIniFile('Facebook','TokenAccess',FTokenAccess);
+         CreateIniFile('Facebook','Email',FEmail);
+         CreateIniFile('Facebook','Id',FId);
+         CreateIniFile('Facebook','first_name',FFirstPersonsName);
+         CreateIniFile('Facebook','Email',FEmail);
+
+       End;
+
        Result := True;
 
       Except
@@ -475,7 +486,7 @@ begin
 
               if LinkCapa <> '' then
                if DownloadImage( LinkCapa, RetStream) then
-                Result := RetStream
+                 Result := RetStream
                Else
                 Result := Nil;
 
@@ -546,6 +557,7 @@ procedure TjsAuthFacebook.LoadAutoSave;
 begin
 
   FTokenAccess := ReadIniFile('Facebook','TokenAccess');
+  FEmail       := ReadIniFile('Facebook','Email');
 
 end;
 
@@ -597,8 +609,12 @@ begin
            Begin
 
              if FAutoSave then
-             CreateIniFile('Facebook','TokenAccess',FTokenAccess);
+             Begin
 
+               CreateIniFile('Facebook','TokenAccess',FTokenAccess);
+               CreateIniFile('Facebook','Email',FEmail);
+
+             End;
 
              TWebBrowser(ASender).Align   := TAlignLayout.None;
              TWebBrowser(ASender).Height  := 1;
@@ -877,15 +893,6 @@ begin
    Begin
 
 
-       If FAutoSave then
-       Begin
-
-         CreateIniFile('Google','AccessToken',FAccessToken);
-         CreateIniFile('Google','RefreshToken',FRefreshToken);
-         CreateIniFile('Google','AuthCode',FAuthCode);
-
-       End;
-
        LClient.ResetToDefaults;
        LRequest.ResetToDefaults;
 
@@ -919,11 +926,34 @@ begin
        if (FAutoSave) And (FId <> '') then
        CreateIniFile('Google','Id',FId);
 
+       If FAutoSave then
+       Begin
+
+         CreateIniFile('Google','AccessToken',FAccessToken);
+         CreateIniFile('Google','RefreshToken',FRefreshToken);
+         CreateIniFile('Google','AuthCode',FAuthCode);
+         CreateIniFile('Google','Email',FEmail);
+
+       End;
+
        RetStream := TMemoryStream.Create;
 
        if Link <> '' then
          If DownloadImage(Link, RetStream ) Then
-         FImgProfile := RetStream;
+         Begin
+
+           RetStream.SaveToFile( System.SysUtils.GetHomePath + PathDelim + 'ImgPerfil.jpg');
+           FImgProfile := RetStream;
+
+         End
+         Else
+         if TFile.Exists( System.SysUtils.GetHomePath + PathDelim + 'ImgPerfil.jpg' ) then
+         Begin
+
+           RetStream.LoadFromFile( System.SysUtils.GetHomePath + PathDelim + 'ImgPerfil.jpg' );
+           FImgProfile := RetStream;
+
+         End;
 
 
        FreeAndNil(LOAuth2);
@@ -1076,6 +1106,7 @@ begin
    FAccessToken  := ReadIniFile('Google','AccessToken');
    FRefreshToken := ReadIniFile('Google','RefreshToken');
    FId           := ReadIniFile('Google','RefreshToken');
+   FEmail        := ReadIniFile('Google','Email');
 
 end;
 
@@ -1099,6 +1130,15 @@ begin
        TWebBrowser(ASender).EvaluateJavaScript(js);
 
     End;
+
+
+  if POS('https://www.google.com.br/?1=1',URL) > 0 then
+  Begin
+
+    finishedProcess := True;
+    frmAuthGoogle.Close;
+
+  End;
 
 end;
 
@@ -1147,7 +1187,8 @@ begin
           finishedProcess  := True;
 
           frmAuthGoogle.ModalResult := mrOk;
-          frmAuthGoogle.CloseModal;
+
+          TWebBrowser(ASender).URL := 'https://www.google.com.br/?1=1'
 
         End;
 

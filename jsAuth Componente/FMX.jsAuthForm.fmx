@@ -1297,10 +1297,4 @@ object FrmJsAuth: TFrmJsAuth
       Size.PlatformDefault = False
     end
   end
-  object Time_Google: TTimer
-    Enabled = False
-    OnTimer = Time_GoogleTimer
-    Left = 176
-    Top = 114
-  end
 end
