@@ -11,7 +11,8 @@ unit FMX.jsAuth;
 	  
 	  Muitas informações para você.
 	  
-	  Data modificação : 12/02/2017
+	  Data modificação : 22/06/2017
+	  Por : Igor de Bastos Costa
 	  
 	  jsAuth.dpk
 
@@ -698,7 +699,7 @@ begin
    FMessageAuth := '';
    FAutoSave    := False;
    FLoginHint   := '';
-
+   FAuthCode    := '';{ Ao dar Logout e tentar relogar, o codigo nao abre a tela de login }
 
 end;
 
@@ -1105,7 +1106,7 @@ begin
    FAuthCode     := ReadIniFile('Google','AuthCode');
    FAccessToken  := ReadIniFile('Google','AccessToken');
    FRefreshToken := ReadIniFile('Google','RefreshToken');
-   FId           := ReadIniFile('Google','RefreshToken');
+   FId           := ReadIniFile('Google', 'ID'); { Ele deve buscar o ID e nao o RefreshToken }
    FEmail        := ReadIniFile('Google','Email');
 
 end;
