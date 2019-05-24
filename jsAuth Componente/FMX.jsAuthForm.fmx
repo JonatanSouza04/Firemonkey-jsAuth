@@ -7,15 +7,9 @@ object FrmJsAuth: TFrmJsAuth
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   DesignerMasterStyle = 3
-  object Time_URL: TTimer
-    Enabled = False
-    Interval = 1500
-    OnTimer = Time_URLTimer
-    Left = 48
-    Top = 112
-  end
   object Layout_Main: TLayout
     Align = Client
     Size.Width = 444.000000000000000000
@@ -28,7 +22,11 @@ object FrmJsAuth: TFrmJsAuth
       Size.Height = 602.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
+      object aniLoading: TAniIndicator
+        Align = Center
+      end
       object WebBrowser: TWebBrowser
+        EnableCaching = False
         Align = Client
         Size.Width = 444.000000000000000000
         Size.Height = 602.000000000000000000
@@ -41,30 +39,49 @@ object FrmJsAuth: TFrmJsAuth
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
-      object ToolBar: TToolBar
+      object rctTitle: TRectangle
+        Align = Contents
+        Fill.Kind = None
         Size.Width = 444.000000000000000000
-        Size.Height = 48.000000000000000000
+        Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
-        object SB_Cancel: TSpeedButton
-          Align = Left
-          ModalResult = 8
-          Size.Width = 48.000000000000000000
-          Size.Height = 48.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'backtoolbutton'
-        end
-        object Lbl_Msg_Loading: TLabel
-          Align = Client
+        Stroke.Kind = None
+        object lblTitle: TLabel
+          Align = Contents
           StyledSettings = [Family, Style, FontColor]
-          Margins.Right = 50.000000000000000000
-          Size.Width = 346.000000000000000000
-          Size.Height = 48.000000000000000000
+          Size.Width = 444.000000000000000000
+          Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 16.000000000000000000
           TextSettings.HorzAlign = Center
-          Text = 'Aguarde, autenticando...'
+          TabOrder = 1
+        end
+        object SB_Cancel: TSpeedButton
+          Align = Left
+          ModalResult = 8
+          Position.Y = 1.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object pthCancel: TPath
+            Align = Client
+            Data.Path = {
+              0700000000000000D7A3F641AE476D41010000000000E0410000404101000000
+              000080410000C041010000000000E0410000104201000000D7A3F64114AE0442
+              01000000AE47AD410000C04103000000D7A3F641AE476D41}
+            Fill.Color = claBlack
+            Locked = True
+            HitTest = False
+            Margins.Left = 15.000000000000000000
+            Margins.Top = 10.000000000000000000
+            Margins.Right = 15.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Size.Width = 18.000000000000000000
+            Size.Height = 28.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+          end
         end
       end
     end

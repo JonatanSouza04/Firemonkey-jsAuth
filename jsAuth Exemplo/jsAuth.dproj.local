@@ -1,18 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2016/05/04 13:06:40.000.647,=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/11/21 13:42:11.000.877,=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2017/02/05 15:26:12.000.995,=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2017/02/11 17:28:57.000.385,=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2017/02/11 17:29:18.000.392,C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\U_Main.fmx=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
-    <Transaction>2017/02/11 17:29:18.000.392,C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\U_Main.pas=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2017/02/11 17:29:29.000.111,C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\PrjjsAuth.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>2017/02/11 17:29:37.000.577,C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\jsAuth.dproj=C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\PrjjsAuth.dproj</Transaction>
+    <Transaction>2017/02/11 17:29:18.000.392,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Unit1.fmx=C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\U_Main.fmx</Transaction>
+    <Transaction>2017/02/11 17:29:29.000.111,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\PrjjsAuth.dproj</Transaction>
+    <Transaction>2017/02/11 17:29:37.000.577,C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\PrjjsAuth.dproj=C:\Users\Jonatan Souza\Desktop\jsAuth Facebook e Google\jsAuth.dproj</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<PIOS-TWT iOSSimulator="_iossimulator_9E3C8ABF-49FA-41FD-83D4-90117C44D5F8" iOSDevice32="_iosdevice_636e3faaab8d66990b38ddc6b31a749c57a81de8" iOSDevice64="_iosdevice_636e3faaab8d66990b38ddc6b31a749c57a81de8"/>
-		<NoProfile iOSSimulator="iPhone5" Android="0017033967"/>
+		<NoProfile iOSSimulator="iPhone5" Android="5210b1d4ea2484e3"/>
 	</ActiveMobileDevice>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

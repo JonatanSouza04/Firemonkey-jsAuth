@@ -1,34 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2017/02/05 11:10:14.000.523,=rtl.dcp</Transaction>
-    <Transaction>2017/02/05 11:13:30.000.932,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
-    <Transaction>2017/02/05 11:14:07.000.333,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\jsAuth.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj</Transaction>
-    <Transaction>2017/02/05 11:16:49.000.881,=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.pas</Transaction>
-    <Transaction>2017/02/05 11:17:02.000.216,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\U_Class_Main.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.pas</Transaction>
-    <Transaction>2017/02/05 11:32:23.000.340,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\U_Class_Main.pas</Transaction>
-    <Transaction>2017/02/05 11:32:29.000.105,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth.jsAuth=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth</Transaction>
-    <Transaction>2017/02/05 11:36:01.000.973,=dbrtl.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:01.000.953,=xmlrtl.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:01.000.994,=CustomIPTransport.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.139,=bindengine.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.097,=IndyProtocols.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.014,=fmx.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.077,=IndySystem.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.035,=soaprtl.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.180,=RESTComponents.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.118,=IndyCore.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.055,=inet.dcp</Transaction>
-    <Transaction>2017/02/05 11:36:02.000.159,=bindcomp.dcp</Transaction>
-    <Transaction>2017/02/05 15:26:43.000.322,=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.pas</Transaction>
-    <Transaction>2017/02/05 15:27:07.000.883,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuthForm.fmx=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.fmx</Transaction>
-    <Transaction>2017/02/05 15:27:07.000.883,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuthForm.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.pas</Transaction>
-    <Transaction>2017/02/12 14:11:35.000.344,=IndyIPClient.dcp</Transaction>
-    <Transaction>2017/02/12 14:11:35.000.319,=IndyIPCommon.dcp</Transaction>
-    <Transaction>2017/03/21 11:49:30.773,=C:\Users\Jonatan Souza\Desktop\jsAuth\jsAuth Componente\Unit1.pas</Transaction>
-    <Transaction>2017/03/21 11:49:47.632,C:\Users\Jonatan Souza\Desktop\jsAuth\jsAuth Componente\FMX.WebBrowserHelper.pas=C:\Users\Jonatan Souza\Desktop\jsAuth\jsAuth Componente\Unit1.pas</Transaction>
+    <Transaction>2017/02/05 11:13:30.000.932,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Package1.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj</Transaction>
+    <Transaction>2017/02/05 11:14:07.000.333,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\jsAuth.dproj</Transaction>
+    <Transaction>2017/02/05 11:32:23.000.340,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\U_Class_Main.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.pas</Transaction>
+    <Transaction>2017/02/05 11:32:29.000.105,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth.jsAuth</Transaction>
+    <Transaction>2017/02/05 15:27:07.000.883,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.fmx=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuthForm.fmx</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
-		<NoProfile Android="0017033967"/>
+		<NoProfile Android=""/>
 	</ActiveMobileDevice>
 </BorlandProject>

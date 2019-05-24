@@ -3,7 +3,8 @@ unit U_Main;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
   FMX.StdCtrls, FMX.ScrollBox, FMX.Memo, FMX.Controls.Presentation, FMX.Ani,
   FMX.WebBrowser, FMX.TabControl, FMX.jsAuth;
@@ -52,36 +53,35 @@ var
   Form1: TForm1;
 
 implementation
+
 {$R *.fmx}
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 
-   Mm_Google.Lines.Clear;
-   Mm_Google.Text := jsAuthGoogle.GetPeopleMe;
-
+  Mm_Google.Lines.Clear;
+  Mm_Google.Text := jsAuthGoogle.GetPeopleMe;
 
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 Var
- ImgCapa : TMemoryStream;
+  ImgCapa: TMemoryStream;
 begin
 
- If jsAuthFacebook.TokenAccess <> '' then
- Begin
+  If jsAuthFacebook.TokenAccess <> '' then
+  Begin
 
-   ImgCapa := jsAuthFacebook.GetImageCover;
+    ImgCapa := jsAuthFacebook.GetImageCover;
 
-   if ImgCapa <> Nil then
-   Begin
-            Rct_Facebook_Perfil.Fill.Bitmap.Bitmap.LoadFromStream(ImgCapa);
-            Rct_Facebook_Perfil.Fill.Kind := TBrushKind.Bitmap;
-            Rct_Facebook_Perfil.Fill.Bitmap.WrapMode := TWrapMode.TileStretch;
-   End;
+    if ImgCapa <> Nil then
+    Begin
+      Rct_Facebook_Perfil.Fill.Bitmap.Bitmap.LoadFromStream(ImgCapa);
+      Rct_Facebook_Perfil.Fill.Kind := TBrushKind.Bitmap;
+      Rct_Facebook_Perfil.Fill.Bitmap.WrapMode := TWrapMode.TileStretch;
+    End;
 
- End;
-
+  End;
 
 end;
 
@@ -89,78 +89,79 @@ procedure TForm1.SB_faceClick(Sender: TObject);
 begin
 
   jsAuthFacebook.Clear;
-  jsAuthFacebook.IdClient := '<ID FACEBOOK> https://developers.facebook.com/apps/ ';
+  jsAuthFacebook.IdClient := '2139393642844516';
 
   if Chq_AutoLoad.IsChecked then
-  jsAuthFacebook.LoadAutoSave;
+    jsAuthFacebook.LoadAutoSave;
 
   if jsAuthFacebook.TokenAccess <> '' then
   Begin
 
-     ShowMessage('Config Encontrada');
-         If jsAuthFacebook.GetInfoFacebook Then
-         Begin
+    ShowMessage('Config Encontrada');
+    If jsAuthFacebook.GetInfoFacebook Then
+    Begin
 
-           Mm_Facebook.Lines.Clear;
-           Mm_Facebook.Lines.Add(' ID : ' + jsAuthFacebook.Id);
-           Mm_Facebook.Lines.Add(' Nome : ' + jsAuthFacebook.PersonsName);
-           Mm_Facebook.Lines.Add(' Nascimento : ' + jsAuthFacebook.Birthday);
-           Mm_Facebook.Lines.Add(' Primeiro Nome : ' + jsAuthFacebook.FirstPersonsName);
-           Mm_Facebook.Lines.Add(' Link : ' + jsAuthFacebook.LinkProfile);
-           Mm_Facebook.Lines.Add(' Website : ' + jsAuthFacebook.Website);
-           Mm_Facebook.Lines.Add(' Email : ' + jsAuthFacebook.Email);
-           Mm_Facebook.Lines.Add(' Token : ' + jsAuthFacebook.TokenAccess);
+      Mm_Facebook.Lines.Clear;
+      Mm_Facebook.Lines.Add(' ID : ' + jsAuthFacebook.Id);
+      Mm_Facebook.Lines.Add(' Nome : ' + jsAuthFacebook.PersonsName);
+      Mm_Facebook.Lines.Add(' Nascimento : ' + jsAuthFacebook.Birthday);
+      Mm_Facebook.Lines.Add(' Primeiro Nome : ' +
+        jsAuthFacebook.FirstPersonsName);
+      Mm_Facebook.Lines.Add(' Link : ' + jsAuthFacebook.LinkProfile);
+      Mm_Facebook.Lines.Add(' Website : ' + jsAuthFacebook.Website);
+      Mm_Facebook.Lines.Add(' Email : ' + jsAuthFacebook.Email);
+      Mm_Facebook.Lines.Add(' Token : ' + jsAuthFacebook.TokenAccess);
 
+      if jsAuthFacebook.ImgProfile <> Nil then
+        Cir_Facebook.Fill.Bitmap.Bitmap.LoadFromStream
+          (jsAuthFacebook.ImgProfile);
 
-           if jsAuthFacebook.ImgProfile <> Nil then
-           Cir_Facebook.Fill.Bitmap.Bitmap.LoadFromStream(jsAuthFacebook.ImgProfile);
-
-
-           TabControl1.ActiveTab := Tab_Facebook;
-         End;
+      TabControl1.ActiveTab := Tab_Facebook;
+    End;
 
   End
   Else
   Begin
 
+    jsAuthFacebook.AutoSave := True;
+    jsAuthFacebook.jsAuth(
+      procedure
+      Begin
 
-  jsAuthFacebook.AutoSave := True;
-  jsAuthFacebook.jsAuth(procedure
-  Begin
+        If (jsAuthFacebook.TokenAccess <> '') Then
+        Begin
 
-     If (jsAuthFacebook.TokenAccess <> '')  Then
-     Begin
+          If jsAuthFacebook.GetInfoFacebook Then
+          Begin
 
-         If jsAuthFacebook.GetInfoFacebook Then
-         Begin
+            Mm_Facebook.Lines.Clear;
+            Mm_Facebook.Lines.Add(' ID : ' + jsAuthFacebook.Id);
+            Mm_Facebook.Lines.Add(' Nome : ' + jsAuthFacebook.PersonsName);
+            Mm_Facebook.Lines.Add(' Nascimento : ' + jsAuthFacebook.Birthday);
+            Mm_Facebook.Lines.Add(' Primeiro Nome : ' +
+              jsAuthFacebook.FirstPersonsName);
+            Mm_Facebook.Lines.Add(' Link : ' + jsAuthFacebook.LinkProfile);
+            Mm_Facebook.Lines.Add(' Website : ' + jsAuthFacebook.Website);
+            Mm_Facebook.Lines.Add(' Email : ' + jsAuthFacebook.Email);
+            Mm_Facebook.Lines.Add(' Token : ' + jsAuthFacebook.TokenAccess);
 
-           Mm_Facebook.Lines.Clear;
-           Mm_Facebook.Lines.Add(' ID : ' + jsAuthFacebook.Id);
-           Mm_Facebook.Lines.Add(' Nome : ' + jsAuthFacebook.PersonsName);
-           Mm_Facebook.Lines.Add(' Nascimento : ' + jsAuthFacebook.Birthday);
-           Mm_Facebook.Lines.Add(' Primeiro Nome : ' + jsAuthFacebook.FirstPersonsName);
-           Mm_Facebook.Lines.Add(' Link : ' + jsAuthFacebook.LinkProfile);
-           Mm_Facebook.Lines.Add(' Website : ' + jsAuthFacebook.Website);
-           Mm_Facebook.Lines.Add(' Email : ' + jsAuthFacebook.Email);
-           Mm_Facebook.Lines.Add(' Token : ' + jsAuthFacebook.TokenAccess);
+            if jsAuthFacebook.ImgProfile <> Nil then
+              Cir_Facebook.Fill.Bitmap.Bitmap.LoadFromStream
+                (jsAuthFacebook.ImgProfile);
 
+            TabControl1.ActiveTab := Tab_Facebook;
 
-           if jsAuthFacebook.ImgProfile <> Nil then
-           Cir_Facebook.Fill.Bitmap.Bitmap.LoadFromStream(jsAuthFacebook.ImgProfile);
+          End
+          Else
+            ShowMessage('Erro ao recuperar informações da conta.');
 
-           TabControl1.ActiveTab := Tab_Facebook;
+        End
+        Else
+          ShowMessage('Erro na autenticação');
 
-         End
-         Else
-         ShowMessage('Erro ao recuperar informações da conta.');
+      End);
 
-     End
-     Else
-     ShowMessage('Erro na autenticação');
-
-  End);
-
- End;
+  End;
 
 end;
 
@@ -169,80 +170,83 @@ begin
 
   jsAuthGoogle.Clear;
 
-  jsAuthGoogle.IdClient := '< ID GOOGLE https://console.developers.google.com/apis/';
+  jsAuthGoogle.IdClient :=
+    '142454293898-oq4c6685vdj9kbukbp87ibprkaftc7ne.apps.googleusercontent.com';
   jsAuthGoogle.MessageAuth := 'Autenticando no Google...';
 
   if Chq_AutoLoad.IsChecked then
-  jsAuthGoogle.LoadAutoSave;
+    jsAuthGoogle.LoadAutoSave;
 
   if (jsAuthGoogle.AuthCode <> '') And (jsAuthGoogle.AccessToken <> '') then
   Begin
 
-           ShowMessage('Config Encontrada');
-           If jsAuthGoogle.GetInfoGoogle Then
-           Begin
+    ShowMessage('Config Encontrada');
+    If jsAuthGoogle.GetInfoGoogle Then
+    Begin
 
-             Mm_Google.Lines.Clear;
-             Mm_Google.Lines.Add(' ID : ' + jsAuthGoogle.Id);
-             Mm_Google.Lines.Add(' Nome : ' + jsAuthGoogle.PersonsName);
-             Mm_Google.Lines.Add(' Primeiro Nome : ' + jsAuthGoogle.FirstPersonsName);
-             Mm_Google.Lines.Add(' Link : ' + jsAuthGoogle.LinkProfile);
-             Mm_Google.Lines.Add(' Website : ' + jsAuthGoogle.Website);
-             Mm_Google.Lines.Add(' Token Access : ' + jsAuthGoogle.AccessToken);
-             Mm_Google.Lines.Add(' Token Refresh : ' + jsAuthGoogle.RefreshToken);
-             Mm_Google.Lines.Add(' AuthCode : ' + jsAuthGoogle.AuthCode);
+      Mm_Google.Lines.Clear;
+      Mm_Google.Lines.Add(' ID : ' + jsAuthGoogle.Id);
+      Mm_Google.Lines.Add(' Nome : ' + jsAuthGoogle.PersonsName);
+      Mm_Google.Lines.Add(' Primeiro Nome : ' + jsAuthGoogle.FirstPersonsName);
+      Mm_Google.Lines.Add(' Link : ' + jsAuthGoogle.LinkProfile);
+      Mm_Google.Lines.Add(' Website : ' + jsAuthGoogle.Website);
+      Mm_Google.Lines.Add(' Token Access : ' + jsAuthGoogle.AccessToken);
+      Mm_Google.Lines.Add(' Token Refresh : ' + jsAuthGoogle.RefreshToken);
+      Mm_Google.Lines.Add(' AuthCode : ' + jsAuthGoogle.AuthCode);
 
-             if jsAuthGoogle.ImgProfile <> Nil then
-             Cir_Google.Fill.Bitmap.Bitmap.LoadFromStream(jsAuthGoogle.ImgProfile);
+      if jsAuthGoogle.ImgProfile <> Nil then
+        Cir_Google.Fill.Bitmap.Bitmap.LoadFromStream(jsAuthGoogle.ImgProfile);
 
-             TabControl1.ActiveTab := Tab_Google;
+      TabControl1.ActiveTab := Tab_Google;
 
-           End
-           Else
-           ShowMessage('Erro ao recuperar informações da conta.');
-
+    End
+    Else
+      ShowMessage('Erro ao recuperar informações da conta.');
 
   End
   Else
   begin
 
-  jsAuthGoogle.AutoSave := True;
-  jsAuthGoogle.jsAuth(procedure
-  begin
+    jsAuthGoogle.AutoSave := True;
+    jsAuthGoogle.jsAuth(
+      procedure
+      begin
 
-        If (jsAuthGoogle.AuthCode <> '')  Then
+        If (jsAuthGoogle.AuthCode <> '') Then
         Begin
 
-           If jsAuthGoogle.GetInfoGoogle Then
-           Begin
+          If jsAuthGoogle.GetInfoGoogle Then
+          Begin
 
-             Mm_Google.Lines.Clear;
-             Mm_Google.Lines.Add(' ID : ' + jsAuthGoogle.Id);
-             Mm_Google.Lines.Add(' Nome : ' + jsAuthGoogle.PersonsName);
-             Mm_Google.Lines.Add(' Primeiro Nome : ' + jsAuthGoogle.FirstPersonsName);
-             Mm_Google.Lines.Add(' Link : ' + jsAuthGoogle.LinkProfile);
-             Mm_Google.Lines.Add(' Website : ' + jsAuthGoogle.Website);
-             Mm_Google.Lines.Add(' Token Access : ' + jsAuthGoogle.AccessToken);
-             Mm_Google.Lines.Add(' Token Refresh : ' + jsAuthGoogle.RefreshToken);
-             Mm_Google.Lines.Add(' AuthCode : ' + jsAuthGoogle.AuthCode);
+            Mm_Google.Lines.Clear;
+            Mm_Google.Lines.Add(' ID : ' + jsAuthGoogle.Id);
+            Mm_Google.Lines.Add(' Nome : ' + jsAuthGoogle.PersonsName);
+            Mm_Google.Lines.Add(' Primeiro Nome : ' +
+              jsAuthGoogle.FirstPersonsName);
+            Mm_Google.Lines.Add(' Link : ' + jsAuthGoogle.LinkProfile);
+            Mm_Google.Lines.Add(' Website : ' + jsAuthGoogle.Website);
+            Mm_Google.Lines.Add(' Token Access : ' + jsAuthGoogle.AccessToken);
+            Mm_Google.Lines.Add(' Token Refresh : ' +
+              jsAuthGoogle.RefreshToken);
+            Mm_Google.Lines.Add(' AuthCode : ' + jsAuthGoogle.AuthCode);
 
-             if jsAuthGoogle.ImgProfile <> Nil then
-             Cir_Google.Fill.Bitmap.Bitmap.LoadFromStream(jsAuthGoogle.ImgProfile);
+            if jsAuthGoogle.ImgProfile <> Nil then
+              Cir_Google.Fill.Bitmap.Bitmap.LoadFromStream
+                (jsAuthGoogle.ImgProfile);
 
-             TabControl1.ActiveTab := Tab_Google;
+            TabControl1.ActiveTab := Tab_Google;
 
-           End
-           Else
-           ShowMessage('Erro ao recuperar informações da conta.');
+          End
+          Else
+            ShowMessage('Erro ao recuperar informações da conta.');
 
         End
         Else
-        ShowMessage('Erro na autenticação');
+          ShowMessage('Erro na autenticação');
 
-    End
-  );
+      End);
 
- End;
+  End;
 
 end;
 

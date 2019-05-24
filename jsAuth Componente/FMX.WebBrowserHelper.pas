@@ -243,7 +243,7 @@ begin
   if (GetField<JWebBrowser>('FJWebBrowser') <> nil) then
   begin
     WebBrowser := GetField<JWebBrowser>('FJWebBrowser');
-    WebBrowser.getSettings.setCacheMode(TJWebSettings.JavaClass.LOAD_DEFAULT);
+    WebBrowser.getSettings.setCacheMode(TJWebSettings.JavaClass.LOAD_NO_CACHE);
     WebBrowser.setOverScrollMode(TJView.JavaClass.OVER_SCROLL_NEVER);
     WebBrowser.getSettings.setBuiltInZoomControls(False);
     WebBrowser.getSettings.setLoadWithOverviewMode(True);
