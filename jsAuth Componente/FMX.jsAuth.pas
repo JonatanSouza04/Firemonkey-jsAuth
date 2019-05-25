@@ -26,6 +26,11 @@ unit FMX.jsAuth;
   Por: Carlos Henrique Ribeiro Modesto
   Alteração:
   JavaScript de LogOut. Apaga o Cookie logo apos o recebimento do Token
+  Por: Igor de Bastos Costa
+  Alteração:
+  Implementado a limpeza da memoria do frmAuth no metodo Clear
+  Implementado apresentacao de msgs para o usuario nao ficar perdido
+  Implementado um AniIndicator para o usuario nao ficar perdido
 
   jsAuth.dpk
 
@@ -90,6 +95,8 @@ Type
     FTitleVisible: Boolean;
     FLinkImgProfile: string;
     FDoDownloadImage: Boolean;
+    FTitleGetUserInfo: string;
+    FTitleLoadPage: string;
 
     procedure SetIdClient(const Value: String);
     procedure SetScope(const Value: String);
@@ -97,16 +104,22 @@ Type
     procedure SetAutoSave(const Value: Boolean);
 
     procedure OnDidFinishLoadFace(ASender: TObject);
+    procedure OnDidStartLoadFace(ASender: TObject);
     procedure OnCloseFace(Sender: TObject; var Action: TCloseAction);
 
     Function DownloadImage(Link: String; out ImgStream: TMemoryStream): Boolean;
     function LogOutJavaScript: string;
     Function CreateIniFile(Table, Field, Value: String): Boolean;
     Function ReadIniFile(Table, Field: String): String;
+    function GetTitleGetUserInfo: string;
+    function GetTitleLoadPage: string;
+
+    procedure LoadingShow();
+    procedure LoadingHide();
 
   protected
 
-    frmAuthFacebook: TFrmJsAuth;
+    frmAuth: TFrmJsAuth;
     finishedProcess: Boolean;
 
   public
@@ -124,6 +137,7 @@ Type
     Procedure LoadAutoSave;
     Procedure Clear;
     Function DeleteIniFile: Boolean;
+
   published
 
     property TokenAccess: String read FTokenAccess;
@@ -145,6 +159,9 @@ Type
     property TitleVisible: Boolean read FTitleVisible write FTitleVisible;
     property DoDownloadImage: Boolean read FDoDownloadImage
       write FDoDownloadImage;
+    property TitleLoadPage: string read GetTitleLoadPage write FTitleLoadPage;
+    property TitleGetUserInfo: string read GetTitleGetUserInfo
+      write FTitleGetUserInfo;
   End;
 
   { Google }
@@ -190,7 +207,7 @@ Type
 
   protected
 
-    frmAuthGoogle: TFrmJsAuth;
+    frmAuth: TFrmJsAuth;
     finishedProcess: Boolean;
 
   public
@@ -266,6 +283,13 @@ begin
 
     if FTokenAccess <> '' then
     Begin
+      TThread.Synchronize(nil,
+        procedure()
+        begin
+          if (Assigned(frmAuth)) then
+            frmAuth.lblTitle.Text := TitleGetUserInfo;
+        end);
+
       LResponse := TRESTResponse.Create(Self);
       RetStream := TMemoryStream.Create;
 
@@ -338,6 +362,20 @@ begin
   end;
 end;
 
+function TjsAuthFacebook.GetTitleGetUserInfo: string;
+begin
+  Result := FTitleGetUserInfo;
+  if (Result.Trim.IsEmpty) then
+    Result := 'Getting User Info...'
+end;
+
+function TjsAuthFacebook.GetTitleLoadPage: string;
+begin
+  Result := FTitleLoadPage;
+  if (Result.Trim.IsEmpty) then
+    Result := 'Loading Page...';
+end;
+
 procedure TjsAuthFacebook.Clear;
 begin
   FTokenAccess := '';
@@ -354,6 +392,13 @@ begin
   FWebsite := '';
   FMessageAuth := '';
   FAutoSave := False;
+
+  if (Assigned(frmAuth)) then
+  begin
+    frmAuth.WebBrowser.Stop;
+    frmAuth.Close;
+    FreeAndNil(frmAuth);
+  end;
 end;
 
 constructor TjsAuthFacebook.Create(AOwner: TComponent);
@@ -462,7 +507,7 @@ begin
 end;
 
 function TjsAuthFacebook.DownloadImage(Link: String;
-  out ImgStream: TMemoryStream): Boolean;
+out ImgStream: TMemoryStream): Boolean;
 Var
   NetHTTP: TNetHTTPRequest;
   NetClient: TNetHTTPClient;
@@ -576,19 +621,20 @@ begin
       URIEncode(FScope) + '&redirect_uri=' +
       URIEncode('https://www.facebook.com/connect/login_success.html');
 
-    if Not Assigned(frmAuthFacebook) then
-      frmAuthFacebook := TFrmJsAuth.Create(Application);
+    if Not Assigned(frmAuth) then
+      frmAuth := TFrmJsAuth.Create(Application);
 
-    frmAuthFacebook.WebBrowser.OnDidFinishLoad := OnDidFinishLoadFace;
+    frmAuth.WebBrowser.OnDidFinishLoad := OnDidFinishLoadFace;
+    frmAuth.WebBrowser.OnDidStartLoad := OnDidStartLoadFace;
 
     if FMessageAuth <> '' then
-      frmAuthFacebook.SetTitleMsg(FMessageAuth);
+      frmAuth.SetTitleMsg(FMessageAuth);
 
-    frmAuthFacebook.SetBackGroundTitleColor(FRctTitleColor);
-    frmAuthFacebook.SetTitleVisible(TitleVisible);
+    frmAuth.SetBackGroundTitleColor(FRctTitleColor);
+    frmAuth.SetTitleVisible(TitleVisible);
 
-    frmAuthFacebook.SetUrl(LUrl);
-    frmAuthFacebook.ShowModal(
+    frmAuth.SetUrl(LUrl);
+    frmAuth.ShowModal(
       procedure(ModalResult: TModalResult)
       begin
         finishedProcess := True;
@@ -603,16 +649,37 @@ begin
   FEmail := ReadIniFile('Facebook', 'Email');
 end;
 
+procedure TjsAuthFacebook.LoadingHide;
+begin
+  if Assigned(frmAuth) then
+  begin
+    frmAuth.aniLoading.Visible := False;
+    frmAuth.aniLoading.Enabled := False;
+    frmAuth.WebBrowser.Align := TAlignLayout.Client;
+  end;
+end;
+
+procedure TjsAuthFacebook.LoadingShow;
+begin
+  if Assigned(frmAuth) then
+  begin
+    frmAuth.aniLoading.Enabled := True;
+    frmAuth.aniLoading.Visible := True;
+    frmAuth.WebBrowser.Align := TAlignLayout.None;
+    frmAuth.WebBrowser.Height := 1;
+  end;
+end;
+
 procedure TjsAuthFacebook.LogOut;
 var
   LJs: string;
 begin
-  if Not Assigned(frmAuthFacebook) then
-    frmAuthFacebook := TFrmJsAuth.Create(Application);
+  if Not Assigned(frmAuth) then
+    frmAuth := TFrmJsAuth.Create(Application);
   LJs := LogOutJavaScript;
-  frmAuthFacebook.WebBrowser.EvaluateJavaScript(LJs);
-  frmAuthFacebook.ModalResult := mrOk;
-  frmAuthFacebook.Close;
+  frmAuth.WebBrowser.EvaluateJavaScript(LJs);
+  frmAuth.ModalResult := mrOk;
+  frmAuth.Close;
 end;
 
 function TjsAuthFacebook.LogOutJavaScript: string;
@@ -646,9 +713,6 @@ Var
 begin
   URL := TWebBrowser(ASender).URL;
 
-  if (POS('session', URL) > 0) then
-    StrToInt('1');
-
   if FTokenAccess = '' then
   Begin
     PosI := POS('#access_token=', URL);
@@ -673,9 +737,10 @@ begin
 
         finishedProcess := True;
         LJs := LogOutJavaScript;
-        frmAuthFacebook.WebBrowser.EvaluateJavaScript(LJs);
-        frmAuthFacebook.ModalResult := mrOk;
-        frmAuthFacebook.Close;
+        frmAuth.WebBrowser.EvaluateJavaScript(LJs);
+        frmAuth.WebBrowser.Stop;
+        frmAuth.ModalResult := mrOk;
+        frmAuth.Close;
       End;
     End;
 
@@ -685,7 +750,19 @@ begin
       finishedProcess := True;
     End;
   End;
+  if (Assigned(frmAuth)) then
+    frmAuth.lblTitle.Text := '';
+
+  LoadingHide;
 End;
+
+procedure TjsAuthFacebook.OnDidStartLoadFace(ASender: TObject);
+begin
+  if (Assigned(frmAuth)) then
+    frmAuth.lblTitle.Text := TitleLoadPage;
+
+  LoadingShow;
+end;
 
 procedure TjsAuthFacebook.SetAutoSave(const Value: Boolean);
 begin
@@ -739,6 +816,12 @@ begin
   FAutoSave := False;
   FLoginHint := '';
   FAuthCode := '';
+  if (Assigned(frmAuth)) then
+  begin
+    frmAuth.WebBrowser.Stop;
+    frmAuth.Close;
+    FreeAndNil(frmAuth);
+  end;
   { Ao dar Logout e tentar relogar, o codigo nao abre a tela de login }
 end;
 
@@ -1093,27 +1176,27 @@ begin
     if FLoginHint <> '' then
       URL := URL + '&login_hint=' + URIEncode(FLoginHint);
 
-    if Not Assigned(frmAuthGoogle) then
-      frmAuthGoogle := TFrmJsAuth.Create(Application);
+    if Not Assigned(frmAuth) then
+      frmAuth := TFrmJsAuth.Create(Application);
 
-    frmAuthGoogle.SetBackGroundTitleColor(FRctTitleColor);
-    frmAuthGoogle.SetTitleVisible(TitleVisible);
+    frmAuth.SetBackGroundTitleColor(FRctTitleColor);
+    frmAuth.SetTitleVisible(TitleVisible);
 
-    frmAuthGoogle.WebBrowser.OnShouldStartLoadWithRequest :=
+    frmAuth.WebBrowser.OnShouldStartLoadWithRequest :=
       OnShouldStartLoadWithRequest;
-    frmAuthGoogle.WebBrowser.OnDidFinishLoad := OnDidFinishLoadGoogle;
-    frmAuthGoogle.WebBrowser.SetUserAgent('Mozilla/5.0 Google');
+    frmAuth.WebBrowser.OnDidFinishLoad := OnDidFinishLoadGoogle;
+    frmAuth.WebBrowser.SetUserAgent('Mozilla/5.0 Google');
     { frmAuthGoogle.WebBrowser.SetUserAgent('Mozilla/5.0 (Linux; Android 4.1.1;' +
       ' Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) ' +
       'Chrome/18.0.1025.166 Mobile Safari/535.19'); }
-    frmAuthGoogle.LayoutTop.Visible := True;
-    frmAuthGoogle.SetUrl(URL);
+    frmAuth.LayoutTop.Visible := True;
+    frmAuth.SetUrl(URL);
 
     if FMessageAuth <> '' then
-      frmAuthGoogle.SetTitleMsg(FMessageAuth);
+      frmAuth.SetTitleMsg(FMessageAuth);
 
-    frmAuthGoogle.ModalResult := mrOk;
-    frmAuthGoogle.ShowModal(
+    frmAuth.ModalResult := mrOk;
+    frmAuth.ShowModal(
       procedure(ModalResult: TModalResult)
       begin
         finishedProcess := True;
@@ -1154,7 +1237,7 @@ begin
   if POS('https://www.google.com.br/?1=1', URL) > 0 then
   Begin
     finishedProcess := True;
-    frmAuthGoogle.Close;
+    frmAuth.Close;
   End;
 end;
 
@@ -1196,7 +1279,7 @@ begin
         TWebBrowser(ASender).Height := 1;
         finishedProcess := True;
 
-        frmAuthGoogle.ModalResult := mrOk;
+        frmAuth.ModalResult := mrOk;
 
         TWebBrowser(ASender).URL := 'https://www.google.com.br/?1=1';
       End;

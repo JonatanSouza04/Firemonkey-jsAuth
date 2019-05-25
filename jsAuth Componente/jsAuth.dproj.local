@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2017/02/05 11:13:30.000.932,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Package1.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj</Transaction>
-    <Transaction>2017/02/05 11:14:07.000.333,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\jsAuth.dproj</Transaction>
-    <Transaction>2017/02/05 11:32:23.000.340,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\U_Class_Main.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.pas</Transaction>
-    <Transaction>2017/02/05 11:32:29.000.105,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth.jsAuth</Transaction>
-    <Transaction>2017/02/05 15:27:07.000.883,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.fmx=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuthForm.fmx</Transaction>
+    <Transaction>2017/02/05 11:13:30.000.932,C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
+    <Transaction>2017/02/05 11:14:07.000.333,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\jsAuth.dproj=C:\Users\Jonatan Souza\Documents\Embarcadero\Studio\Projects\jsAuth.dproj</Transaction>
+    <Transaction>2017/02/05 11:32:23.000.340,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.pas=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\U_Class_Main.pas</Transaction>
+    <Transaction>2017/02/05 11:32:29.000.105,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth.jsAuth=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuth</Transaction>
+    <Transaction>2017/02/05 15:27:07.000.883,C:\Users\Jonatan Souza\Desktop\Componente jsAuth\FMX.jsAuthForm.fmx=C:\Users\Jonatan Souza\Desktop\Componente jsAuth\Unit1.fmx</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
-		<NoProfile Android=""/>
+		<NoProfile Android="5210b1d4ea2484e3"/>
 	</ActiveMobileDevice>
 </BorlandProject>
